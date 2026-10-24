@@ -8,6 +8,11 @@ chmod +x canon_lbp_setup.sh
 ```
 ### Notes
 After installation, there will be a shortcut on your Desktop. Run it to check your printer status (if it shows "Ready to Print", the printer is ready to use)
+
+This is a legacy Canon CAPT driver. The installer uses the system package manager to resolve its dependencies and creates a native systemd service on systemd-based Ubuntu releases. Newer Ubuntu releases no longer provide `libglade2-0`; the installer then downloads the last Ubuntu archive build (checksum-verified) and installs it alongside the driver. The installer does not disable or weaken AppArmor to work around driver incompatibilities.
+
+On 64-bit systems the driver also runs 32-bit helpers that need `libxml2.so.2`, which newer Ubuntu releases no longer ship for i386. The installer adds checksum-verified copies (with `libicu74`) to `/usr/local/lib/i386-linux-gnu` and removes them on uninstall. If the status monitor reports a socket error or printing stalls after a system upgrade, run `sudo ./canon_lbp_setup.sh fix-libs`.
+
 ### Supported Models
 - LBP-810
 - LBP1120
